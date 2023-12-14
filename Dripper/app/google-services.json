@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "111091350932",
+    "project_id": "dripper-48098",
+    "storage_bucket": "dripper-48098.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111091350932:android:2435484836f227ee612381",
+        "android_client_info": {
+          "package_name": "com.example.dripper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClM70dcrwHgrPOT7qDJqt_RXNprcWNFRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
