@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.dripper.presentation.MainScreen
 import com.example.dripper.ui.theme.DripperTheme
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
@@ -19,18 +20,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val database = Firebase.database("https://dripper-48098-default-rtdb.europe-west1.firebasedatabase.app/")
-        val myRef = database.getReference("test-message")
-        myRef.setValue("DUPSKO!")
 
         setContent {
             DripperTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Text(text = "Drip drip drip")
-                }
+                MainScreen(database)
             }
         }
     }
