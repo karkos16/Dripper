@@ -11,7 +11,8 @@ import com.google.firebase.database.FirebaseDatabase
 data class Plant(
     val name: String,
     val moisture: Float,
-    val imageURL: String
+    val imageURL: String,
+    val lastWatered: String
 )
 
 data class Room(
@@ -31,10 +32,53 @@ class MainScreenViewModel(
 
     val maxNumberOfPlants = 2
 
+    var showAddDialog by mutableStateOf(false)
+        private set
+
+    var showEditDialog by mutableStateOf(false)
+        private set
+
+    var showDeleteDialog by mutableStateOf(false)
+        private set
+
     fun setPlants() {
         plants.addAll(listOf(
-            Plant("Plant 1", 70.1f, "https://images.unsplash.com/photo-1612837017391-8b9b6b7b9b0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGxhbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"),
-            Plant("Plant 2", 50.2f, "https://images.unsplash.com/photo-1612837017391-8b9b6b7b9b0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGxhbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80")
+            Plant(
+                "Truskawka",
+                70.1f,
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Strawberry_closeup.jpg/1280px-Strawberry_closeup.jpg",
+                "2021-10-10"
+            ),
+            Plant(
+                "Plant 2",
+                50.2f,
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Strawberry_closeup.jpg/1280px-Strawberry_closeup.jpg",
+                "2021-10-11"
+            )
         ))
+    }
+
+    fun showAddDialog() {
+        showAddDialog = true
+    }
+
+    fun hideAddDialog() {
+        showAddDialog = false
+    }
+
+    fun showEditDialog() {
+        showEditDialog = true
+    }
+
+    fun hideEditDialog() {
+        showEditDialog = false
+    }
+
+    fun showDeleteDialog() {
+        showDeleteDialog = true
+    }
+
+    fun hideDeleteDialog() {
+        showDeleteDialog = false
     }
 }
