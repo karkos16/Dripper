@@ -20,7 +20,7 @@ import coil.compose.AsyncImage
 @Composable
 fun PlantImage(imgUrl: String) {
     Box(modifier = Modifier
-        .fillMaxHeight(0.7f)
+        .fillMaxHeight(0.6f)
         .fillMaxWidth()
         .padding(32.dp),
         contentAlignment = Alignment.Center

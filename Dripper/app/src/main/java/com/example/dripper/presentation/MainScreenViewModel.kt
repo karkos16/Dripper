@@ -1,31 +1,40 @@
 package com.example.dripper.presentation
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 data class Plant(
-    val name: String,
-    val moisture: Float,
-    val imageURL: String,
-    val lastWatered: String
+    val name: String = "",
+    val currentMoisture: Float = 0f,
+    val targetMoisture: Float = 0f,
+    val imageURL: String = "",
+    val lastWatered: String = ""
 )
 
 data class Room(
-    val temperature: Float,
-    val humidity: Float
+    val temperature: Float = 0f,
+    val humidity: Float = 0f
 )
 
 class MainScreenViewModel(
     private val database: FirebaseDatabase
 ): ViewModel() {
 
+    private val roomInfoRef = database.getReference("roomInfo")
+    private val firstPlantRef = database.getReference("plants").child("plant1")
+    private val secondPlantRef = database.getReference("plants").child("plant2")
     var room by mutableStateOf(Room(0f, 0f))
         private set
+
 
     var plants = mutableStateListOf<Plant>()
         private set
@@ -41,22 +50,60 @@ class MainScreenViewModel(
     var showDeleteDialog by mutableStateOf(false)
         private set
 
-    fun setPlants() {
-        plants.addAll(listOf(
-            Plant(
-                "Truskawka",
-                70.1f,
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Strawberry_closeup.jpg/1280px-Strawberry_closeup.jpg",
-                "2021-10-10"
-            ),
-            Plant(
-                "Plant 2",
-                50.2f,
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Strawberry_closeup.jpg/1280px-Strawberry_closeup.jpg",
-                "2021-10-11"
-            )
-        ))
+    private val roomValueEventListener = object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            // Handle data changes here
+            val roomSnapshot = snapshot.getValue(Room::class.java)
+            room = roomSnapshot ?: Room(0f, 0f)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            // Handle error here
+        }
     }
+
+    private val firstPlantValueEventListener = object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val plantSnapshot = snapshot.getValue(Plant::class.java)
+            if (plantSnapshot != null) {
+                plants[0] = plantSnapshot
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            // Handle error here
+        }
+    }
+
+    private val secondPlantValueEventListener = object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val plantSnapshot = snapshot.getValue(Plant::class.java)
+            if (plantSnapshot != null) {
+                plants[1] = plantSnapshot
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            // Handle error here
+        }
+    }
+
+    init {
+        plants.add(Plant("Plant 1", 0f, 0f, "", ""))
+        plants.add(Plant("Plant 1", 0f, 0f, "", ""))
+        roomInfoRef.addValueEventListener(roomValueEventListener)
+        firstPlantRef.addValueEventListener(firstPlantValueEventListener)
+        secondPlantRef.addValueEventListener(secondPlantValueEventListener)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        roomInfoRef.removeEventListener(roomValueEventListener)
+        firstPlantRef.removeEventListener(firstPlantValueEventListener)
+        secondPlantRef.removeEventListener(secondPlantValueEventListener)
+    }
+
+
 
     fun showAddDialog() {
         showAddDialog = true

@@ -18,7 +18,6 @@ fun MainScreen(
     database: FirebaseDatabase
 ) {
     val viewModel = MainScreenViewModel(database)
-    viewModel.setPlants()
 
     MainScreenContent(viewModel)
 }
