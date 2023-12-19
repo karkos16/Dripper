@@ -35,6 +35,8 @@ class MainScreenViewModel(
     var room by mutableStateOf(Room(0f, 0f))
         private set
 
+    var selectedButton by mutableStateOf("")
+        private set
 
     var plants = mutableStateListOf<Plant>()
         private set
@@ -50,15 +52,28 @@ class MainScreenViewModel(
     var showDeleteDialog by mutableStateOf(false)
         private set
 
+    var newPlantName by mutableStateOf("")
+        private set
+
+    var newPlantTargetMoisture by mutableStateOf("")
+        private set
+
+    fun updateNewPlantName(name: String) {
+        newPlantName = name
+    }
+
+    fun updateNewPlantTargetMoisture(moisture: String) {
+        newPlantTargetMoisture = moisture
+    }
+
     private val roomValueEventListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
-            // Handle data changes here
             val roomSnapshot = snapshot.getValue(Room::class.java)
             room = roomSnapshot ?: Room(0f, 0f)
         }
 
         override fun onCancelled(error: DatabaseError) {
-            // Handle error here
+            Log.d("MainScreenViewModel", "onCancelled: " + error.message)
         }
     }
 
@@ -71,7 +86,7 @@ class MainScreenViewModel(
         }
 
         override fun onCancelled(error: DatabaseError) {
-            // Handle error here
+            Log.d("MainScreenViewModel", "onCancelled: " + error.message)
         }
     }
 
@@ -84,7 +99,7 @@ class MainScreenViewModel(
         }
 
         override fun onCancelled(error: DatabaseError) {
-            // Handle error here
+            Log.d("MainScreenViewModel", "onCancelled: " + error.message)
         }
     }
 
@@ -103,7 +118,9 @@ class MainScreenViewModel(
         secondPlantRef.removeEventListener(secondPlantValueEventListener)
     }
 
-
+    fun updateSelectedButton(buttonName: String) {
+        selectedButton = buttonName
+    }
 
     fun showAddDialog() {
         showAddDialog = true

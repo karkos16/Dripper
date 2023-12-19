@@ -29,9 +29,9 @@ fun CUDPanel(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        CUDIcon(onClick = { viewModel.showAddDialog }, icon = Icons.Filled.AddCircle, description = "Add")
-        CUDIcon(onClick = { viewModel.showEditDialog }, icon = Icons.Filled.Edit, description = "Edit")
-        CUDIcon(onClick = { viewModel.showDeleteDialog }, icon = Icons.Filled.Delete, description = "Delete")
+        CUDIcon(onClick = { viewModel.showAddDialog() }, icon = Icons.Filled.AddCircle, description = "Add")
+        CUDIcon(onClick = { viewModel.showEditDialog() }, icon = Icons.Filled.Edit, description = "Edit")
+        CUDIcon(onClick = { viewModel.showDeleteDialog() }, icon = Icons.Filled.Delete, description = "Delete")
     }
 }
 

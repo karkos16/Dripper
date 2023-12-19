@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.dripper.presentation.composables.MainScreenContent
+import com.example.dripper.presentation.composables.dialogs.AddPlantDialog
+import com.example.dripper.presentation.composables.dialogs.Dialogs
 import com.google.firebase.database.FirebaseDatabase
 
 @Composable
@@ -20,6 +22,7 @@ fun MainScreen(
     val viewModel = MainScreenViewModel(database)
 
     MainScreenContent(viewModel)
+    Dialogs(viewModel)
 }
 
 
