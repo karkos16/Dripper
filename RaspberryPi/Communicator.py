@@ -70,9 +70,24 @@ class Communicator:
         except Exception as e:
             print(f"Error getting targetMoisture for {plant_name}: {e}")
             return None
+
+    def set_room_temperature(self, temperature):
+            try:
+                room_ref = db.reference("roomInfo")
+                room_ref.update({"temperature": temperature})
+                return True
+            except Exception as e:
+                print(f"Error setting room temperature: {e}")
+                return False
         
-
-
+    def set_room_humidity(self, humidity):
+        try:
+            room_ref = db.reference("roomInfo")
+            room_ref.update({"humidity": humidity})
+            return True
+        except Exception as e:
+            print(f"Error setting room humidity: {e}")
+            return False
 
 
 
