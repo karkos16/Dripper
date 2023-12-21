@@ -6,69 +6,49 @@ class Communicator:
         cred = credentials.Certificate(service_account_path)
         firebase_admin.initialize_app(cred, {"databaseURL": database_url})
 
-    def get_plant_data(self, plant_name):
-        try:
-            plants_ref = db.reference("plants")
-            plants = plants_ref.get()
+    def get_plant_data(self, plant):
+            try:
+                plants_ref = db.reference("plants")
+                plant_ref = plants_ref.child(plant)
+                plant_data = plant_ref.get()
 
-            if plants:
-                for plant_key, plant_data in plants.items():
-                    if plant_data.get("name") == plant_name:
-                        return plant_data
-            return None
-        
-        except Exception as e:
-            print(f"Error getting data for {plant_name}: {e}")
-            return None
-
-
-    def get_plant_currentMoisture(self, plant_name):
-        try:
-            return self.get_plant_data(plant_name).get("currentMoisture")
-        except Exception as e:
-            print(f"Error getting currentMoisture for {plant_name}: {e}")
-            return None
-    
-    def set_plant_currentMoisture(self, plant_name, currentMoisture):
-        try:
-            plants_ref = db.reference("plants")
-            plants = plants_ref.get()
+                return plant_data
             
-            if plants:
-                for plant_key, plant_data in plants.items():
-                    if plant_data.get("name") == plant_name:
-                        plants_ref.child(plant_key).update({"currentMoisture": currentMoisture})
-                        return True
+            except Exception as e:
+                print(f"Error getting data for {plant}: {e}")
+                return None
+
+  
+    def set_plant_currentMoisture(self, plant, currentMoisture):
+        try:
+            plant = self.get_plant_data(plant) 
+            plant.update({"currentMoisture": currentMoisture})
+            return True
         except Exception as e:
-            print(f"Error setting currentMoisture for {plant_name}: {e}")
+            print(f"Error setting currentMoisture for {plant}: {e}")
             return False
     
-    def get_plant_lastWatered(self, plant_name):
+    def get_plant_lastWatered(self, plant):
         try:
-            return self.get_plant_data(plant_name).get("lastWatered")
+            return self.get_plant_data(plant).get("lastWatered")
         except Exception as e:
-            print(f"Error getting lastWatered for {plant_name}: {e}")
+            print(f"Error getting lastWatered for {plant}: {e}")
             return None
     
-    def set_plant_lastWatered(self, plant_name, lastWatered):
+    def set_plant_lastWatered(self, plant, lastWatered):
         try:
-            plants_ref = db.reference("plants")
-            plants = plants_ref.get()
-            
-            if plants:
-                for plant_key, plant_data in plants.items():
-                    if plant_data.get("name") == plant_name:
-                        plants_ref.child(plant_key).update({"lastWatered": lastWatered})
-                        return True
+            plant = self.get_plant_data(plant) 
+            plant.update({"lastWatered": lastWatered})
+            return True
         except Exception as e:
-            print(f"Error setting lastWatered for {plant_name}: {e}")
+            print(f"Error setting lastWatered for {plant}: {e}")
             return False
         
-    def get_plant_targetMoisture(self, plant_name):
+    def get_plant_targetMoisture(self, plant):
         try:
-            return self.get_plant_data(plant_name).get("targetMoisture")
+            return self.get_plant_data(plant).get("targetMoisture")
         except Exception as e:
-            print(f"Error getting targetMoisture for {plant_name}: {e}")
+            print(f"Error getting targetMoisture for {plant}: {e}")
             return None
 
     def set_room_temperature(self, temperature):
@@ -89,5 +69,14 @@ class Communicator:
             print(f"Error setting room humidity: {e}")
             return False
 
+    def get_Switch_info(self):
+        try:
+            switch_ref = db.reference("Switch")
+            switch_value = switch_ref.get()
 
+            return switch_value
+        
+        except Exception as e:
+            print(f"Error getting Switch information: {e}")
+            return None
 
