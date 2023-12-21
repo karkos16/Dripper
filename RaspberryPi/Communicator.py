@@ -7,22 +7,29 @@ class Communicator:
         firebase_admin.initialize_app(cred, {"databaseURL": database_url})
 
     def get_plant_data(self, plant):
-            try:
-                plants_ref = db.reference("plants")
-                plant_ref = plants_ref.child(plant)
-                plant_data = plant_ref.get()
+        try:
+            plants_ref = db.reference("plants")
+            plant_ref = plants_ref.child(plant)
 
-                return plant_data
-            
-            except Exception as e:
-                print(f"Error getting data for {plant}: {e}")
-                return None
+            return plant_ref
 
-  
+        except Exception as e:
+            print(f"Error getting data for {plant}: {e}")
+            return None
+
+    def get_plant_switch_info(self, plant):
+        try:
+            return self.get_plant_data(plant).get().get("switch")
+        except Exception as e:
+            print(f"Error getting switch for {plant}: {e}")
+            return None
+
     def set_plant_currentMoisture(self, plant, currentMoisture):
         try:
-            plant = self.get_plant_data(plant) 
-            plant.update({"currentMoisture": currentMoisture})
+            print(f"Setting moisture for {plant}")
+            plant = self.get_plant_data(plant)
+            print(currentMoisture)
+            plant.update({"currentMoisture": round(currentMoisture, 2)})
             return True
         except Exception as e:
             print(f"Error setting currentMoisture for {plant}: {e}")
@@ -46,7 +53,7 @@ class Communicator:
         
     def get_plant_targetMoisture(self, plant):
         try:
-            return self.get_plant_data(plant).get("targetMoisture")
+            return self.get_plant_data(plant).get().get("targetMoisture")
         except Exception as e:
             print(f"Error getting targetMoisture for {plant}: {e}")
             return None
@@ -54,7 +61,7 @@ class Communicator:
     def set_room_temperature(self, temperature):
             try:
                 room_ref = db.reference("roomInfo")
-                room_ref.update({"temperature": temperature})
+                room_ref.update({"temperature": round(temperature, 2)})
                 return True
             except Exception as e:
                 print(f"Error setting room temperature: {e}")
@@ -63,7 +70,7 @@ class Communicator:
     def set_room_humidity(self, humidity):
         try:
             room_ref = db.reference("roomInfo")
-            room_ref.update({"humidity": humidity})
+            room_ref.update({"humidity": round(humidity, 2)})
             return True
         except Exception as e:
             print(f"Error setting room humidity: {e}")
