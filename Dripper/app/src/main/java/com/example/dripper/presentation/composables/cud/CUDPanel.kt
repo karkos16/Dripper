@@ -9,6 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -29,9 +31,30 @@ fun CUDPanel(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        CUDIcon(onClick = { viewModel.showAddDialog() }, icon = Icons.Filled.AddCircle, description = "Add")
-        CUDIcon(onClick = { viewModel.showEditDialog() }, icon = Icons.Filled.Edit, description = "Edit")
-        CUDIcon(onClick = { viewModel.showDeleteDialog() }, icon = Icons.Filled.Delete, description = "Delete")
+        CUDIcon(
+            onClick = { viewModel.showAddDialog() },
+            icon = Icons.Filled.AddCircle,
+            description = "Add"
+        )
+        CUDIcon(
+            onClick = { viewModel.showEditDialog() },
+            icon = Icons.Filled.Edit,
+            description = "Edit"
+        )
+        CUDIcon(
+            onClick = { viewModel.showDeleteDialog() },
+            icon = Icons.Filled.Delete,
+            description = "Delete"
+        )
+        CUDIcon(
+            onClick = { viewModel.changeSwitchStatus() },
+            icon = if (viewModel.isRaspberryRunning) {
+                Icons.Filled.Lock
+            } else {
+                Icons.Filled.PlayArrow
+            },
+            description = "Run/stop program"
+        )
     }
 }
 

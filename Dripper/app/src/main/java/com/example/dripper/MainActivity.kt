@@ -16,6 +16,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.database.database
 import com.google.firebase.database.ktx.database
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

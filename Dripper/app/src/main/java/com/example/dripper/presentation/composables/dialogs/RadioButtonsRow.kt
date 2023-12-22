@@ -13,18 +13,17 @@ fun RadioButtonsRow(
     firstButtonText : String,
     secondButtonText : String
     ) {
-
     Row (
         verticalAlignment = Alignment.CenterVertically
     ) {
         RadioButton(
-            selected = viewModel.selectedButton == firstButtonText,
-            onClick = { viewModel.updateSelectedButton(firstButtonText) }
+            selected = viewModel.selectedPlantIndex == 0,
+            onClick = { viewModel.updateSelectedButton(0) }
         )
         Text(text = firstButtonText)
         RadioButton(
-            selected = viewModel.selectedButton == secondButtonText,
-            onClick = { viewModel.updateSelectedButton(secondButtonText) }
+            selected = viewModel.selectedPlantIndex == 1,
+            onClick = { viewModel.updateSelectedButton(1) }
         )
         Text(text = secondButtonText)
     }

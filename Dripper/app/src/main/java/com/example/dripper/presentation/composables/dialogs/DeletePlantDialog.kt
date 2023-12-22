@@ -1,5 +1,6 @@
 package com.example.dripper.presentation.composables.dialogs
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -22,6 +23,16 @@ fun DeletePlantDialog(
         dismissButton = {
             TextButton(onClick = onDismissRequest) {
                 Text("Cancel")
+            }
+        },
+        text = {
+            Column {
+                Text(text = "Which plant delete?")
+                RadioButtonsRow(
+                    viewModel = viewModel,
+                    firstButtonText = viewModel.plants[0].name,
+                    secondButtonText = viewModel.plants[1].name
+                )
             }
         }
     )
