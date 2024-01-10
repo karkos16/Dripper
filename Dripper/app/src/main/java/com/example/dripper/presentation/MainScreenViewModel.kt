@@ -17,7 +17,8 @@ data class Plant(
     val currentMoisture: Float = 0f,
     val targetMoisture: Float = 0f,
     val imageURL: String = "",
-    val lastWatered: String = ""
+    val lastWatered: String = "",
+    val switch: String = "On"
 )
 
 data class Room(
