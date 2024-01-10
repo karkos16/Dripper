@@ -2,11 +2,12 @@
 
 ## Overview
 
-This mobile app is designed to manage and automate plant watering. Built using Jetpack Compose, the app connects to Firebase for data storage and synchronization. It provides users with a straightforward interface to monitor and control their plant watering activities.
+This project, a collaboration on Embedded Systems uni project, involved working with two colleagues. While they were responsible for developing the source code for the Raspberry Pi-based plant watering system, I took charge of creating the mobile app. The app, built using Jetpack Compose, connects to Firebase for data storage and synchronization, providing users with an intuitive interface to manage and automate plant watering.
+
 
 ## Features
 
-- **Automated Watering**: Easily set up target moisture for different plants, and the app will automatically water them according to the defined moisture.
+- **Automated Watering**: Easily set up target moisture for different plants, and the system will automatically water them according to the defined moisture.
 
 - **Firebase Integration**: Securely store and synchronize plant details and watering schedules across devices using Firebase.
 
@@ -22,13 +23,13 @@ This mobile app is designed to manage and automate plant watering. Built using J
 <tr>
 <td>
 
-![Main screen](readme_src/main_screen.png){width=300}
+![Main screen](readme_src/main_screen.png)
 *Main screen*
 
 </td>
 <td>
 
-![Add screen](readme_src/add_screen.png){width=300}
+![Add screen](readme_src/add_screen.png)
 *Add plant dialog*
 
 
